@@ -1,0 +1,39 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Optional: set global font */
+body {
+  margin: 0;
+  padding: 0;
+}
+html {
+  overflow-y: scroll;
+}
+
+@font-face {
+  font-family: birthStone;
+  src: url("../src/fonts/BirthstoneBounce-Regular.ttf");
+}
+@font-face {
+  font-family: roboto;
+  src: url("../src/fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: poppins;
+  src: url("../src/fonts/Poppins-Regular.ttf");
+}
+/* @font-face {
+  font-family: lora;
+  src: url('../src/fonts/Lora-Regular.ttf');
+} */
+@import "tailwindcss";
+
+
+@theme {
+  --font-birthStone: birthStone, 'sans-serif';
+  --font-lora: lora, 'sans-serif';
+  --font-roboto: roboto, 'sans-serif';
+    --font-poppins: poppins, 'sans-serif';
+}
