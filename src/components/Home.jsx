@@ -1,10 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate';
 import { blogs } from '../data/blogs';
 import HomeBlogContent from "./HomeBlogContent";
 import {useSearch} from '../context/SearchContext'
 
 const Home = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const res = await fetch('/api/post');
+        if (!res.ok) throw new Error(`HTTP Error! Status : ${res.status}`);
+        const data = await res.json();
+        setPosts(data);
+      } catch (error) {
+        console.error('Failed to fetch posts' , error);
+      }
+    }
+    fetchPost();
+  }, []);
+
+
+console.log(posts);
+
 
   const {searchInput, setSearchInput} = useSearch();
   const [loading, setLoading] = useState(false);
@@ -12,14 +31,14 @@ const Home = () => {
   const postsPerPage = 10;
   const pagesVisited = pageNumber * postsPerPage;
 
-  const filteredBlog = blogs.filter((blog) => blog.title.toLowerCase().includes(searchInput.toLowerCase()) || blog.tags.some(tag => tag.toLowerCase().includes(searchInput.toLowerCase())));
+  const filteredBlog = posts.filter((blog) => blog.title.toLowerCase().includes(searchInput.toLowerCase()) || blog.tags.some(tag => tag.toLowerCase().includes(searchInput.toLowerCase())));
 
   const displayBlog = filteredBlog.slice(pagesVisited, pagesVisited + postsPerPage).map((blog) => (
     <div className='flex gap-6 text-xl' key={blog.id} >
       <div className='w-[30%]'>
         <img src={blog.img} loading='lazy' alt="" className='rounded-2xl w-full h-48 object-cover hover:scale-105 transition-transform duration-300 cursor-pointer'  />
       </div>
-      <HomeBlogContent title={blog.title} date={blog.date} category={blog.category} author={blog.author} tags={blog.tags} description={blog.description}  />
+      <HomeBlogContent publishedAt={blog.published_at}  title={blog.title} date={blog.date} category={blog.category} author={blog.author} slug={blog.slug} tags={blog.tags} content={blog.content}  />
     </div>
   ));
 

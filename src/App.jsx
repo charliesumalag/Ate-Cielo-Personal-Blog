@@ -10,9 +10,6 @@ import Tags from './components/Tags'
 import { SearchProvider } from "./context/SearchContext";
 import PageNotFound from './components/PageNotFound'
 
-
-
-
 const App = () => {
   return (
     <BrowserRouter>
@@ -31,7 +28,6 @@ const App = () => {
           <Route path='blog' element={ <Blog /> }></Route>
           <Route path="*" element={ <PageNotFound />} />
         </Route>
-
       </Routes>
     </BrowserRouter>
   )
