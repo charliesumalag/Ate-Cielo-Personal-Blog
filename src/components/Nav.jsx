@@ -18,7 +18,7 @@ const Nav = () => {
                     <NavLink to='/about' className={({ isActive }) => isActive ? 'text-black font-medium uppercase  ' : 'text-[#323232] uppercase font-medium'}>About</NavLink>
                 </li>
             </ul>
-            <h1 className='text-3xl font font-birthStone'><NavLink to='/' >Cielo  <span className='text-[#FF374A] font-bold'>S.</span> </NavLink></h1>
+            <h1 className='text-3xl font font-birthStone'><NavLink to='/' >Charlie  <span className='text-[#FF374A] font-bold'>S.</span> </NavLink></h1>
             <div className='flex items-center gap-2 text-[#323232]'>
                   <Search />
                 <i className="fa-brands fa-square-twitter cursor-pointer text-[15px] hover:text-black hover:scale-140 transition-transform duration-300" ></i>

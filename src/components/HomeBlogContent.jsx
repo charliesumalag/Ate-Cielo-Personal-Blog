@@ -1,14 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 
-const HomeBlogContent = React.memo(({title,author, slug, category, tags, publishedAt, content, post }) => {
-function formatDate(dateString) {
-  return new Intl.DateTimeFormat('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  }).format(new Date(dateString));
-}
+const HomeBlogContent = React.memo(({title,author, slug, category, tags, publishedAt, date, content, post }) => {
+
 
   return (
    <div className='font-lora w-[70%]'>
@@ -16,7 +10,7 @@ function formatDate(dateString) {
           <div className='flex items-center  gap-3  mt-4' >
             <h5 className='uppercase font-roboto font-bold text-[#333] text-[13px] leading-[16px] tracking-[0.6px]'>{author ? author : 'Cielo'}</h5>
             <p className='uppercase leading-[14px] tracking-[0.6px] font-roboto text-[11.5px] text-[#999]'>{category}</p>
-            <p className='uppercase leading-[14px] tracking-[0.6px] font-roboto text-[11.5px] text-[#999]'>--{formatDate(publishedAt)}--</p>
+            <p className='uppercase leading-[14px] tracking-[0.6px] font-roboto text-[11.5px] text-[#999]'>--{date}--</p>
           </div>
           <div className='mt-2'>
             <p className='text-[14px] leading-[1.45em] text-[#777] tracking-[0.1px] font-roboto'>{content}</p>

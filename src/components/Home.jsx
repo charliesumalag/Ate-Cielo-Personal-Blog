@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate';
-import { blogs } from '../data/blogs';
 import HomeBlogContent from "./HomeBlogContent";
 import {useSearch} from '../context/SearchContext'
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+
+
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -13,7 +14,8 @@ const Home = () => {
         const res = await fetch('/api/post');
         if (!res.ok) throw new Error(`HTTP Error! Status : ${res.status}`);
         const data = await res.json();
-        setPosts(data);
+        console.log(data.posts);
+        setPosts(data.posts);
       } catch (error) {
         console.error('Failed to fetch posts' , error);
       }
@@ -22,7 +24,7 @@ const Home = () => {
   }, []);
 
 
-console.log(posts);
+
 
 
   const {searchInput, setSearchInput} = useSearch();
@@ -31,16 +33,31 @@ console.log(posts);
   const postsPerPage = 10;
   const pagesVisited = pageNumber * postsPerPage;
 
+
+
+
   const filteredBlog = posts.filter((blog) => blog.title.toLowerCase().includes(searchInput.toLowerCase()) || blog.tags.some(tag => tag.toLowerCase().includes(searchInput.toLowerCase())));
 
-  const displayBlog = filteredBlog.slice(pagesVisited, pagesVisited + postsPerPage).map((blog) => (
-    <div className='flex gap-6 text-xl' key={blog.id} >
-      <div className='w-[30%]'>
-        <img src={blog.img} loading='lazy' alt="" className='rounded-2xl w-full h-48 object-cover hover:scale-105 transition-transform duration-300 cursor-pointer'  />
+
+  const displayBlog = filteredBlog.slice(pagesVisited, pagesVisited + postsPerPage).map((blog) => {
+     const formattedDate = new Date(blog.created_at).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+    console.log(blog);
+
+    return (
+      <div className='flex gap-6 text-xl' key={blog.id} >
+        <div className='w-[30%]'>
+          <img src={blog.image_path ? `http://localhost:8000/storage/${blog.image_path}` : '/default-thumbnail.jpg'} loading='lazy' alt="" className='rounded-2xl w-full h-48 object-cover hover:scale-105 transition-transform duration-300 cursor-pointer'  />
+        </div>
+        <HomeBlogContent publishedAt={blog.published_at}  title={blog.title} date={formattedDate} category={blog.category} author={blog.user.name} slug={blog.slug} tags={blog.tags} content={blog.description}  />
       </div>
-      <HomeBlogContent publishedAt={blog.published_at}  title={blog.title} date={blog.date} category={blog.category} author={blog.author} slug={blog.slug} tags={blog.tags} content={blog.content}  />
-    </div>
-  ));
+    )
+  });
+
+
 
   const pageCount = Math.ceil(filteredBlog.length / postsPerPage);
 
