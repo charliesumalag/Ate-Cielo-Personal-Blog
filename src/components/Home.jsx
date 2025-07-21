@@ -6,15 +6,12 @@ import {useSearch} from '../context/SearchContext'
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
-
-
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const res = await fetch('/api/post');
         if (!res.ok) throw new Error(`HTTP Error! Status : ${res.status}`);
         const data = await res.json();
-        console.log(data.posts);
         setPosts(data.posts);
       } catch (error) {
         console.error('Failed to fetch posts' , error);
@@ -22,9 +19,6 @@ const Home = () => {
     }
     fetchPost();
   }, []);
-
-
-
 
 
   const {searchInput, setSearchInput} = useSearch();
@@ -35,8 +29,7 @@ const Home = () => {
 
 
 
-
-  const filteredBlog = posts.filter((blog) => blog.title.toLowerCase().includes(searchInput.toLowerCase()) || blog.tags.some(tag => tag.toLowerCase().includes(searchInput.toLowerCase())));
+  const filteredBlog = posts.filter((blog) => blog.title.toLowerCase().includes(searchInput.toLowerCase()) || blog.tags.split(',').some(tag => tag.toLowerCase().includes(searchInput.toLowerCase())));
 
 
   const displayBlog = filteredBlog.slice(pagesVisited, pagesVisited + postsPerPage).map((blog) => {
@@ -45,19 +38,18 @@ const Home = () => {
       month: 'long',
       day: 'numeric',
     });
-    console.log(blog);
+    const tags = blog.tags.split(',');
+
 
     return (
       <div className='flex gap-6 text-xl' key={blog.id} >
         <div className='w-[30%]'>
           <img src={blog.image_path ? `http://localhost:8000/storage/${blog.image_path}` : '/default-thumbnail.jpg'} loading='lazy' alt="" className='rounded-2xl w-full h-48 object-cover hover:scale-105 transition-transform duration-300 cursor-pointer'  />
         </div>
-        <HomeBlogContent publishedAt={blog.published_at}  title={blog.title} date={formattedDate} category={blog.category} author={blog.user.name} slug={blog.slug} tags={blog.tags} content={blog.description}  />
+        <HomeBlogContent publishedAt={blog.published_at}  title={blog.title} date={formattedDate} category={blog.category} author={blog.user.name} slug={blog.slug} tags={tags} content={blog.description}  />
       </div>
     )
   });
-
-
 
   const pageCount = Math.ceil(filteredBlog.length / postsPerPage);
 
