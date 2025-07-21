@@ -51,30 +51,7 @@ const Blog = () => {
         {/* <p className=''><span className='font-semibold'>It's no secret </span> {blog.description}</p> */}
       </div>
      <hr className="mt-8 border-t-1 border-gray-200" />
-      <div className='mt-8'>
-        <h2 className='text-[1.17em] font-lora font-bold mb-4'>Related Post:</h2>
-        <div className='flex gap-8 justify-center'>
-          <div className='w-[33%]'>
-            <div className='h-[200px] w-full'>
-              <img className='rounded-2xl h-full transition-transform duration-300 hover:scale-105 cursor-pointer' src={image1} alt="" />
-            </div>
-            <h3 className='text-[14px] leading-[22px] font-lora tracking-[0.8px] font-bold my-3'>Exploring the Hidden Gems of Northern Italy</h3>
-          </div>
-          <div className='w-[33%]'>
-            <div className='h-[200px] w-full'>
-              <img className='rounded-2xl h-full w-full transition-transform duration-300 hover:scale-105 cursor-pointer' src={image2} alt="" />
-            </div>
-            <h3 className='text-[14px] leading-[22px] font-lora tracking-[0.8px] font-bold my-3'>Chasing Sunrises in Peru: A Backpacker's Guide to the Sacred Valley</h3>
-          </div>
-          <div className='w-[33%]'>
-            <div className='h-[200px] w-full'>
-              <img className='rounded-2xl w-full h-full transition-transform duration-300 hover:scale-105 cursor-pointer' src={image3} alt="" />
-            </div>
-            <h3 className='text-[14px] leading-[22px] font-lora tracking-[0.8px] font-bold my-3'>Exploring the Hidden Gems of Northern Italy</h3>
-          </div>
-        </div>
-      </div>
-      <hr className="mb-8 mt-4 border-t-1 border-gray-200" />
+
       <div className='mb-20'>
         <h2 className='text-[1.17em] font-lora font-bold mb-4'>3 comments</h2>
         <div className='flex gap-5 my-5'>
@@ -110,7 +87,32 @@ const Blog = () => {
           </div>
         </div>
       </div>
+
       <hr className="mb-8 border-t-1 border-gray-200" />
+      <div className='mt-8'>
+        <h2 className='text-[1.17em] font-lora font-bold mb-4'>Related Post:</h2>
+        <div className='flex gap-8 justify-center'>
+          <div className='w-[33%]'>
+            <div className='h-[200px] w-full'>
+              <img className='rounded-2xl h-full transition-transform duration-300 hover:scale-105 cursor-pointer' src={image1} alt="" />
+            </div>
+            <h3 className='text-[14px] leading-[22px] font-lora tracking-[0.8px] font-bold my-3'>Exploring the Hidden Gems of Northern Italy</h3>
+          </div>
+          <div className='w-[33%]'>
+            <div className='h-[200px] w-full'>
+              <img className='rounded-2xl h-full w-full transition-transform duration-300 hover:scale-105 cursor-pointer' src={image2} alt="" />
+            </div>
+            <h3 className='text-[14px] leading-[22px] font-lora tracking-[0.8px] font-bold my-3'>Chasing Sunrises in Peru: A Backpacker's Guide to the Sacred Valley</h3>
+          </div>
+          <div className='w-[33%]'>
+            <div className='h-[200px] w-full'>
+              <img className='rounded-2xl w-full h-full transition-transform duration-300 hover:scale-105 cursor-pointer' src={image3} alt="" />
+            </div>
+            <h3 className='text-[14px] leading-[22px] font-lora tracking-[0.8px] font-bold my-3'>Exploring the Hidden Gems of Northern Italy</h3>
+          </div>
+        </div>
+      </div>
+      <hr className="mb-8 mt-4 border-t-1 border-gray-200" />
     </div>
   )
 }

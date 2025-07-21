@@ -43,14 +43,16 @@ const Home = () => {
 
 
     return (
-      <Link to={`/blog/${blog.slug}`}   state={{ blog }} key={blog.id}>
-        <div className='flex gap-6 text-xl' key={blog.id} >
-          <div className='w-[30%]'>
+      <div className='flex gap-6 text-xl' key={blog.id} >
+        <div className='w-[30%]'>
+          <Link to={`/blog/${blog.slug}`}   state={{ blog }} key={blog.id}>
             <img src={blog.image_path ? `http://localhost:8000/storage/${blog.image_path}` : '/default-thumbnail.jpg'} loading='lazy' alt="" className='rounded-2xl w-full h-48 object-cover hover:scale-105 transition-transform duration-300 cursor-pointer'  />
-          </div>
-          <HomeBlogContent publishedAt={blog.published_at}  title={blog.title} date={formattedDate} category={blog.category} author={blog.user.name} slug={blog.slug} tags={tags} content={blog.description}  />
+          </Link>
         </div>
-      </Link>
+        <HomeBlogContent publishedAt={blog.published_at}  title={blog.title} blog={blog} date={formattedDate} category={blog.category} author={blog.user.name} slug={blog.slug} tags={tags} content={blog.description}  />
+      </div>
+
+
     )
   });
 

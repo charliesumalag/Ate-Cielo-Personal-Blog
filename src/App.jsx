@@ -9,17 +9,18 @@ import Blog from './components/Blog'
 import Tags from './components/Tags'
 import { SearchProvider } from "./context/SearchContext";
 import PageNotFound from './components/PageNotFound'
+import AuthLogin from './pages/AuthLogin';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={
-          //2. provide the value to child component
           <SearchProvider>
             <Layout />
           </SearchProvider>
         }>
+          <Route path='/login' element={ <AuthLogin />}></Route>
           <Route index element={ <Home />}></Route>
           <Route path='about' element={<About />}></Route>
           {/* <Route path='tags' element={<Tags />}></Route> */}
