@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate';
 import HomeBlogContent from "./HomeBlogContent";
 import {useSearch} from '../context/SearchContext'
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -42,12 +43,14 @@ const Home = () => {
 
 
     return (
-      <div className='flex gap-6 text-xl' key={blog.id} >
-        <div className='w-[30%]'>
-          <img src={blog.image_path ? `http://localhost:8000/storage/${blog.image_path}` : '/default-thumbnail.jpg'} loading='lazy' alt="" className='rounded-2xl w-full h-48 object-cover hover:scale-105 transition-transform duration-300 cursor-pointer'  />
+      <Link to={`/blog/${blog.slug}`}   state={{ blog }} key={blog.id}>
+        <div className='flex gap-6 text-xl' key={blog.id} >
+          <div className='w-[30%]'>
+            <img src={blog.image_path ? `http://localhost:8000/storage/${blog.image_path}` : '/default-thumbnail.jpg'} loading='lazy' alt="" className='rounded-2xl w-full h-48 object-cover hover:scale-105 transition-transform duration-300 cursor-pointer'  />
+          </div>
+          <HomeBlogContent publishedAt={blog.published_at}  title={blog.title} date={formattedDate} category={blog.category} author={blog.user.name} slug={blog.slug} tags={tags} content={blog.description}  />
         </div>
-        <HomeBlogContent publishedAt={blog.published_at}  title={blog.title} date={formattedDate} category={blog.category} author={blog.user.name} slug={blog.slug} tags={tags} content={blog.description}  />
-      </div>
+      </Link>
     )
   });
 

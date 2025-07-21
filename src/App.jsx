@@ -25,7 +25,7 @@ const App = () => {
           {/* <Route path='tags' element={<Tags />}></Route> */}
           <Route path='contact' element={<Contact />}></Route>
           {/* <Route path='shop' element={ <Shop /> }></Route> */}
-          <Route path='blog' element={ <Blog /> }></Route>
+          <Route path="/blog/:slug" element={<Blog />} />
           <Route path="*" element={ <PageNotFound />} />
         </Route>
       </Routes>

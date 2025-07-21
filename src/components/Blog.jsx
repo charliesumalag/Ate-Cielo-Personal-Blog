@@ -1,31 +1,54 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
+import { useLocation, useParams } from 'react-router-dom';
 import image1 from "../assets/img/travel.jpg";
 import image3 from "../assets/img/travel3.jpg";
 import image2 from "../assets/img/travel4.jpg";
 import Footer from './Footer';
 
 
+
 const Blog = () => {
+   const location = useLocation();
+  const { slug } = useParams();
+  const [blog, setBlog] = useState(location.state?.blog || null);
+
+   useEffect(() => {
+    if (!blog) {
+      // Fallback: fetch post by slug
+      fetch(`http://localhost:8000/api/posts/${slug}`)
+        .then((res) => res.json())
+        .then((data) => setBlog(data))
+        .catch((err) => console.error('Failed to fetch blog:', err));
+    }
+  }, [slug, blog]);
+
+   if (!blog) return <p className="p-6">Loading...</p>;
+
+     const formattedDate = new Date(blog.created_at).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
   return (
     <div>
        <div className='flex flex-col gap-4 mb-6'>
-        <h1 className='font-roboto text-[23px] font-bold text-center tracking-[0.8px] leading-[32px]'>Exploring the Hidden Gems of Northern Italy</h1>
+        <h1 className='font-roboto text-[23px] font-bold text-center tracking-[0.8px] leading-[32px]'>{blog.title}</h1>
         <div className='flex justify-center items-center gap-3' >
-          <h5 className='uppercase font-roboto font-bold text-[#333] text-[13px] leading-[16px] tracking-[0.6px]'>Cielo</h5>
+          <h5 className='uppercase font-roboto font-bold text-[#333] text-[13px] leading-[16px] tracking-[0.6px]'> {blog.user.name}</h5>
           <p className='uppercase leading-[14px] tracking-[0.6px] font-roboto text-[11.5px] text-[#999]'>Travel</p>
-          <p className='uppercase leading-[14px] tracking-[0.6px] font-roboto text-[11.5px] text-[#999]'>--June 20,2025--</p>
+          <p className='uppercase leading-[14px] tracking-[0.6px] font-roboto text-[11.5px] text-[#999]'>--{formattedDate}--</p>
         </div>
       </div>
       <div>
-        <img src={image1} alt="" className='rounded-2xl'/>
+        <img src={blog.image_path ? `http://localhost:8000/storage/${blog.image_path}` : '/default-thumbnail.jpg'} alt="" className='rounded-2xl w-full'/>
       </div>
-      <div className='flex flex-col justify-center m-auto gap-[21px] mt-8 font-lora text-[16px] leading-[29px] w-[75%] text-[#222]'>
-        <p className=''><span className='font-semibold'>It’s no secret </span> that the digital industry is booming. From exciting startups to global brands, companies are reaching out to digital agencies, responding to the new possibilities available. However, the industry is fast becoming overcrowded, heaving with agencies offering similar services — on the surface, at least.
-        </p>
-        <p className=''>Producing creative, fresh projects is the key to standing out. Unique side projects are the best place to innovate, but balancing commercially and creatively lucrative work is tricky. So, this article looks at how to make side projects work and why they’re worthwhile, drawing on lessons learned from our development of the ux ompanion app.
-        </p>
-         <p className=''>Being creative within the constraints of client briefs, budgets and timelines is the norm for most agencies. However, investing in research and development as a true, creative outlet is a powerful addition. In these side projects alone, your team members can pool their expertise to create and shape their own vision — a powerful way to develop motivation, interdisciplinary skills and close relationships.
-        </p>
+      <div className='flex flex-col justify-center gap-[21px] mt-8 font-lora text-[16px] leading-[29px] w-full text-[#222]'>
+      {blog.description.split(/\n+/).map((para, idx) => (
+  <p key={idx} className=" text-gray-800 leading-relaxed">
+    {para}
+  </p>
+))}
+        {/* <p className=''><span className='font-semibold'>It's no secret </span> {blog.description}</p> */}
       </div>
      <hr className="mt-8 border-t-1 border-gray-200" />
       <div className='mt-8'>
