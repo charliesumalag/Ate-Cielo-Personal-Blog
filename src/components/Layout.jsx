@@ -7,13 +7,12 @@ import Footer from './Footer';
 
 const Layout = () => {
   return (
-    <div className='font-roboto '>
-        <Nav />
-        <div className='w-[1000px] mx-auto font-lora'>
-            <Outlet />
-            <Footer />
-        </div>
-
+    <div className='font-roboto flex flex-col h-screen '>
+      <Nav />
+      <div className='flex-grow w-[1000px] mx-auto'>
+      <Outlet />
+      </div>
+      <Footer />
     </div>
   )
 }

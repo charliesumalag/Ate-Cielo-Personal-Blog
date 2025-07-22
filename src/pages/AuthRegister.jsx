@@ -88,7 +88,7 @@ const AuthRegister = () => {
   console.log(state);
 
   return (
-    <div className='flex flex-col justify-center items-center h-screen font-roboto '>
+    <div className='flex flex-col justify-center items-center mt-44  font-roboto '>
         <div className='w-[380px]'>
             <div className='mb-10 flex flex-col gap-2'>
                 <h2 className='text-4xl font-bold tracking-wide text-[#013220]'>Register</h2>
