@@ -10,6 +10,7 @@ import Tags from './components/Tags'
 import { SearchProvider } from "./context/SearchContext";
 import PageNotFound from './components/PageNotFound'
 import AuthLogin from './pages/AuthLogin';
+import AuthRegister from './pages/AuthRegister';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Layout />
           </SearchProvider>
         }>
+          <Route path='/register' element={ <AuthRegister />}></Route>
           <Route path='/login' element={ <AuthLogin />}></Route>
           <Route index element={ <Home />}></Route>
           <Route path='about' element={<About />}></Route>
