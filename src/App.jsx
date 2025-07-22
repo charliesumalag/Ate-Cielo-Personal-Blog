@@ -11,6 +11,7 @@ import { SearchProvider } from "./context/SearchContext";
 import PageNotFound from './components/PageNotFound'
 import AuthLogin from './pages/AuthLogin';
 import AuthRegister from './pages/AuthRegister';
+import EditProfile  from './pages/EditProfile';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           </SearchProvider>
         }>
           <Route path='/register' element={ <AuthRegister />}></Route>
+          <Route path='/editprofile' element={ <EditProfile />}></Route>
           <Route path='/login' element={ <AuthLogin />}></Route>
           <Route index element={ <Home />}></Route>
           <Route path='about' element={<About />}></Route>
