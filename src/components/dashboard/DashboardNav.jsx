@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { AppContext } from '../../context/AppContext';
 
 
 const DashboardNav = () => {
     const {user, setUser, setToken} = useContext(AppContext);
     const navigate = useNavigate();
-    console.log(user);
+
 
     const userNameFormat = (name) => {
         if (!name) return '';
@@ -26,7 +26,6 @@ const DashboardNav = () => {
             });
             if (res.ok) {
                 console.log('logout successful');
-
                setToken(null);
                 setUser(null);
                 localStorage.removeItem('token');
@@ -39,40 +38,62 @@ const DashboardNav = () => {
         }
 
     }
-    const [activeMenu, setActiveMenu] = useState(false);
-    const handleMenuClick = (menu) => {
-        setActiveMenu(prev => (prev === menu ? null : menu));
-    };
+
   return (
     <nav className='bg-[#F8F8FA] flex flex-col justify-between text-black py-6 w-[350px] px-6 h-full'>
         <div className='w-full'>
             <div className='flex justify-between pr-2 pl-3 items-center mb-8'>
                 <div className='flex gap-3 '>
                     <span><i className="fa-solid fa-blog text-[#013220]"></i></span>
-                    {user ? (<h2 className='font-roboto  text-xl font-bold text-[#678579] tracking-[0.9px] '>{userNameFormat(user.name)}</h2>) : (<h2 className='font-roboto  text-xl font-bold text-[#678579] tracking-[0.9px] '>User</h2>)}
+                    {user ? (<h2 className='font-roboto  text-xl font-bold text-[#678579] tracking-[0.9px] '>Hi, {userNameFormat(user.name)}</h2>) : (<h2 className='font-roboto  text-xl font-bold text-[#678579] tracking-[0.9px] '>User</h2>)}
 
                 </div>
                 <span className='cursor-pointer'><i className="fa-solid fa-compress font-bold text-sm" ></i></span>
             </div>
-            <ul className='flex flex-col gap-3 w-full font-roboto'>
-                <li className='flex gap-2 w-full text-gray-700 text-[14px]'>
-                    <NavLink onClick={() => setActiveMenu(null)} className={({isActive}) => isActive ? 'bg-[#E2F0ED] w-full px-4 py-1 text-[#013220] font-medium' : ' w-full px-4 py-1 ' } to='/dashboard'><span><i className="fa-solid fa-border-all mr-2 text-gray-500"></i></span>Dashboard</NavLink>
+            <ul className='flex flex-col mt-20 gap-6 w-full font-roboto'>
+                <li className="w-full">
+                    <NavLink
+                        to="/dashboard" end
+                        className={({ isActive }) =>
+                            isActive
+                            ? 'bg-green-900 text-white w-full px-4 py-3 block rounded-xl'
+                            : 'w-full px-4 py-3 block rounded-xl'
+                            }
+                        > <span className='mr-2'><i class="fa-solid fa-house"></i></span> Dashboard
+                    </NavLink>
                 </li>
-                <li className='flex flex-col gap-2 w-full text-gray-700 text-[14px]'>
-                    <NavLink onClick={() => handleMenuClick('post')} className={({isActive}) => isActive ? ' w-full px-4 py-1 font-medium text-[#013220]' : 'w-full px-4 py-1 '}><span className='mr-2'><i className="fa-solid fa-list"></i></span>Posts</NavLink>
-                    {activeMenu === 'post' && (
-                        <ul className='pl-12 text-gray-400 w-full  text-[13px]'>
-                        <li className='w-full'>
-                            <NavLink to='create' onClick={() => setActiveMenu('post')} className={({isActive}) => isActive ? 'bg-[#E2F0ED] w-full px-4 block py-1 font-medium text-[#013220]' : 'w-full px-4 py-1 block '}><span className='mr-2'><i className="fa-solid fa-plus"></i></span>Create Post</NavLink>
-                        </li>
-                    </ul>
-                    )}
+                <li className="w-full">
+                    <NavLink
+                        to="/dashboard/create"
+                        className={({ isActive }) =>
+                            isActive
+                            ? 'bg-green-900 text-white w-full px-4 py-3 block rounded-xl'
+                            : 'w-full px-4 py-3 block rounded-xl'
+                        }>
+                        <span className='mr-2'><i class="fa-solid fa-circle-plus text-lg"></i></span> New Post
+                    </NavLink>
                 </li>
-                <li className='flex gap-2 w-full text-gray-700 text-[14px]'>
-                    <NavLink to='/categories' className={({isActive}) => isActive ? 'bg-[#E2F0ED] w-full px-4 py-1 font-medium text-[#013220]' : 'w-full px-4 py-1 '}><span className='mr-2 text-gray-500'><i className="fa-solid fa-layer-group"></i></span>Categories</NavLink>
+                <li className="w-full">
+                    <NavLink
+                        to="/dashboard/category"
+                        className={({ isActive }) =>
+                            isActive
+                            ? 'bg-green-900 text-white w-full px-4 py-3 block rounded-xl'
+                            : 'w-full px-4 py-3 block rounded-xl'
+                        }>
+                        <span className='mr-2'><i class="fa-solid fa-layer-group"></i></span> Category
+                    </NavLink>
                 </li>
-                <li className='flex gap-2 w-full text-gray-700 text-[14px]'>
-                    <NavLink to='/settings' className={({isActive}) => isActive ? 'bg-[#E2F0ED] w-full px-4 py-1 font-medium text-[#013220]' : 'w-full px-4 py-1 '}><span className='mr-2 text-gray-500'><i className="fa-solid fa-gear"></i></span>Settings</NavLink>
+                <li className="w-full">
+                    <NavLink
+                        to="/dashboard/mypost"
+                        className={({ isActive }) =>
+                            isActive
+                            ? 'bg-green-900 text-white w-full px-4 py-3 block rounded-xl'
+                            : 'w-full px-4 py-3 block rounded-xl'
+                        }>
+                        <span className='mr-2'><i class="fa-solid fa-clipboard-list text-lg"></i></span> My Post
+                    </NavLink>
                 </li>
             </ul>
         </div>
@@ -85,11 +106,12 @@ const DashboardNav = () => {
                     <p className='text-gray-400 text-sm font-roboto' >User</p>
                 </div>
             </div>)}
-
-            <form action="" onSubmit={handleSubmit} className='flex gap-2 items-center pl-6 text-gray-400 '>
-                <i className="fa-solid fa-arrow-right-from-bracket text-sm"></i>
-                <button className='font-roboto text-sm hover:cursor-pointer'>Logout</button>
-            </form>
+            <Link to={'/'}>
+                <div className='flex gap-2 items-center pl-6 text-gray-400 '>
+                    <i className="fa-solid fa-arrow-right-from-bracket text-sm"></i>
+                    <button className='font-roboto text-sm hover:cursor-pointer'>Go to homepage</button>
+                </div>
+            </Link>
         </div>
     </nav>
   )

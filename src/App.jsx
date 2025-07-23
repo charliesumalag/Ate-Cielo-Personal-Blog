@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './components/Home'
 import About from './components/About'
 import Contact from './components/Contact'
-import Shop from './components/Shop'
 import Blog from './components/Blog'
 import { SearchProvider } from "./context/SearchContext";
 import PageNotFound from './components/PageNotFound'
@@ -13,8 +12,13 @@ import AuthRegister from './pages/AuthRegister';
 import EditProfile  from './pages/EditProfile';
 import Dashboard from "./pages/dashboard/Dashboard";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
+import Create from "./pages/dashboard/post/Create";
+import MyPost from "./pages/dashboard/post/MyPost";
+import Category from "./pages/dashboard/Category";
+import { AppContext } from "./context/AppContext";
 
 const App = () => {
+  const {user, loading} = useContext(AppContext);
   return (
     <BrowserRouter>
       <Routes>
@@ -33,8 +37,11 @@ const App = () => {
           <Route path="/blog/:slug" element={<Blog />} />
           <Route path="*" element={ <PageNotFound />} />
         </Route>
-        <Route path='/dashboard' element={<DashboardLayout />}>
+        <Route path="/dashboard" element={ loading || user  ? <DashboardLayout /> : <AuthLogin />}>
           <Route index element={<Dashboard />}></Route>
+          <Route path="create" element={<Create />}></Route>
+          <Route path="category" element={<Category />}></Route>
+          <Route path="mypost" element={<MyPost />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
