@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom';
 
-const HomeBlogContent = React.memo(({title,author, slug, category, tags, publishedAt, date, content, post, id, blog }) => {
+const HomeBlogContent = React.memo(({title,author, slug, category, tags, date, content, id, blog }) => {
 
   const wordLimiter = (description, limitNumber) => {
     const wordLimited = description.split(' ');

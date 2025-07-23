@@ -8,13 +8,12 @@ import Footer from './Footer';
 
 
 const Blog = () => {
-   const location = useLocation();
+  const location = useLocation();
   const { slug } = useParams();
   const [blog, setBlog] = useState(location.state?.blog || null);
 
-   useEffect(() => {
+  useEffect(() => {
     if (!blog) {
-      // Fallback: fetch post by slug
       fetch(`http://localhost:8000/api/posts/${slug}`)
         .then((res) => res.json())
         .then((data) => setBlog(data))
@@ -22,13 +21,13 @@ const Blog = () => {
     }
   }, [slug, blog]);
 
-   if (!blog) return <p className="p-6">Loading...</p>;
+  if (!blog) return <p className="p-6">Loading...</p>;
 
-     const formattedDate = new Date(blog.created_at).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+  const formattedDate = new Date(blog.created_at).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
   return (
     <div>
        <div className='flex flex-col gap-4 mb-6'>

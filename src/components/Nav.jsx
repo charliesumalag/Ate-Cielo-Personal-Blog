@@ -80,7 +80,9 @@ const Nav = () => {
                 <div className='' ref={dropdownRef}>
                     {(openProfile && user) &&
                         <ul className=" before:content-[''] before:absolute before:top-[-0.7rem] before:right-[1.1rem] before:w-[20px] before:h-[20px] before:rotate-45 before:bg-white before:border-t before:border-l before:border-gray-400 flex flex-col gap-2 p-[15px] border border-gray-400 absolute rounded-[8px] w-[150px] top-[60px] right-[-5px]  bg-white font-roboto text-[12px] leading-[1.7em]  tracking-[0.6px ">
-                            <li className='cursor-pointer text-black font-medium uppercase hover:text-[#FF374A] transition-colors duration-300 ease-in-outs' onClick={handleOpenProfile}>Post Dashboard</li>
+                            <a href='/dashboard' target='_blank'>
+                                <li className='cursor-pointer text-black font-medium uppercase hover:text-[#FF374A] transition-colors duration-300 ease-in-outs' onClick={handleOpenProfile}>Post Dashboard</li>
+                            </a>
                            <Link to="editprofile">
                                 <li className='cursor-pointer text-black font-medium uppercase hover:text-[#FF374A] transition-colors duration-300 ease-in-out' onClick={handleOpenProfile}>Edit Profile</li>
                            </Link>
