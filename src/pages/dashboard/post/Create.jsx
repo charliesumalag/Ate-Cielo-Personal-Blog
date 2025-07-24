@@ -89,7 +89,7 @@ const Create = () => {
         <div className='flex justify-between items-center'>
           <h2 className='font-roboto font-bold text-[22px]'>Add Post</h2>
           {message && (<Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-            Here is a gentle confirmation that your action was successful.
+            Posted
           </Alert>)}
         </div>
         <form className='w-full mt-8 flex flex-col gap-6' onSubmit={handleSubmit}>

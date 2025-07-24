@@ -1,12 +1,14 @@
 import React, {useEffect, useState, useContext} from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
+
 
 const MyPost = () => {
   const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
     const token = localStorage.getItem('token');
     const {user} = useContext(AppContext);
+    const navigate = useNavigate();
 
 
      const fetchPosts = async () => {
@@ -40,7 +42,22 @@ const MyPost = () => {
         });
     }
 
+    const handleDelete = async (postId) => {
+        const res = await fetch(`/api/post/${postId}`,{
+            method: 'DELETE',
+            headers : {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+        const data = await res.json();
+        if (res.ok) {
+            console.log('deleted');
+            navigate(0);
+        }else{
+            console.log(('failed to delete'));
 
+        }
+    }
 
 
   return (
@@ -65,7 +82,7 @@ const MyPost = () => {
                 <td className="px-4 py-2">{formatDate(post.created_at)}</td>
                 <td className="px-4 py-2 flex gap-2">
                     <Link to={`update/${post.id}`} ><p className="text-green-900 cursor-pointer font-bold">Edit</p></Link>
-                    <p className="text-red-900 cursor-pointer font-bold">Delete</p>
+                    <p onClick={() => handleDelete(post.id)} className="text-red-900 cursor-pointer font-bold">Delete</p>
                 </td>
             </tr>
             ))}

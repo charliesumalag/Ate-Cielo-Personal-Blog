@@ -87,7 +87,6 @@ const Update = () => {
       console.log('Validation errors:', data.errors);
     }else{
       setMessage(data.message)
-      navigate('/dashboard/mypost');
     }
   } catch (err) {
     console.error('Error submitting form:', err);
@@ -104,7 +103,7 @@ const Update = () => {
         <div className='flex justify-between items-center'>
           <h2 className='font-roboto font-bold text-[22px]'>Add Post</h2>
           {message && (<Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-            Here is a gentle confirmation that your action was successful.
+            Updated
           </Alert>)}
         </div>
         <form className='w-full mt-8 flex flex-col gap-6' onSubmit={handleSubmit}>
@@ -143,7 +142,7 @@ const Update = () => {
             </div>
           </div>
           <div>
-            <button className='px-5 py-3 bg-green-900 text-white font-roboto font-bold tracking-[0.6px] rounded-lg text-sm  cursor-pointer hover:bg-green-600 transition-all duration-300 ease-in-out'>Create Post</button>
+            <button className='px-5 py-3 bg-green-900 text-white font-roboto font-bold tracking-[0.6px] rounded-lg text-sm  cursor-pointer hover:bg-green-600 transition-all duration-300 ease-in-out'>Update Post</button>
           </div>
         </form>
       </div>) :  (
