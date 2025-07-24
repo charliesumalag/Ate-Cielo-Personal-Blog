@@ -13,6 +13,7 @@ import EditProfile  from './pages/EditProfile';
 import Dashboard from "./pages/dashboard/Dashboard";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import Create from "./pages/dashboard/post/Create";
+import Update from "./pages/dashboard/post/Update";
 import MyPost from "./pages/dashboard/post/MyPost";
 import Category from "./pages/dashboard/Category";
 import CategoryMain from "./pages/dashboard/category/Create";
@@ -41,7 +42,7 @@ const App = () => {
         <Route path="/dashboard" element={ loading || user  ? <DashboardLayout /> : <AuthLogin />}>
           <Route index element={<Dashboard />}></Route>
           <Route path="create" element={<Create />}></Route>
-          {/* <Route path="category" element={<Category />}></Route> */}
+          <Route path="mypost/update/:id" element={<Update />}></Route>
           <Route path="category" element={<CategoryMain />}></Route>
           <Route path="mypost" element={<MyPost />}></Route>
         </Route>
