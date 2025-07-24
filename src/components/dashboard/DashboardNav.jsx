@@ -73,7 +73,7 @@ const DashboardNav = () => {
                         <span className='mr-2'><i className="fa-solid fa-circle-plus text-lg"></i></span> New Post
                     </NavLink>
                 </li>
-                <li className="w-full">
+                {/* <li className="w-full">
                     <NavLink
                         to="/dashboard/category"
                         className={({ isActive }) =>
@@ -83,7 +83,7 @@ const DashboardNav = () => {
                         }>
                         <span className='mr-2'><i className="fa-solid fa-layer-group"></i></span> Category
                     </NavLink>
-                </li>
+                </li> */}
                 <li className="w-full">
                     <NavLink
                         to="/dashboard/mypost"
