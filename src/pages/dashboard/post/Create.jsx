@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
+
 
 const Create = () => {
   const [message, setMessage] = useState(null);
-  const [author, setAuthor] = useState({})
+  const [pending, setPending] = useState(false);
   const [formData, setFormData] = useState({
     category: '',
     title: '',
@@ -13,6 +18,15 @@ const Create = () => {
     published: false,
   })
 
+   useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
 
   const handleChange = (e) => {
     const {name, value, files, type} = e.target;
@@ -21,10 +35,10 @@ const Create = () => {
       [name]: type === 'file' ? files[0] : value,
     }));
   }
-   const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  const token = localStorage.getItem("token");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setPending(true);
+    const token = localStorage.getItem("token");
 
   const form = new FormData();
   form.append('category', formData.category);
@@ -35,80 +49,97 @@ const Create = () => {
   form.append('image', formData.image); // nullable
   form.append('published', formData.published ? 1 : 0);
 
-  const res = await fetch('http://localhost:8000/api/post', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: form,
-  });
+  try {
+    const res = await fetch('http://localhost:8000/api/post', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: form,
+    });
 
-  const data = await res.json();
-  if (!res.ok) {
-    console.log('Validation errors:', data.errors);
-    alert('Validation failed. Check console for details.');
-  } else {
-    setMessage(data.message)
-    setFormData({
-      category: '',
-      title: '',
-      slug: '',
-      description: '',
-      tags: '',
-      image: null,
-      published: false,
-    })
-
+    const data = await res.json();
+    if (!res.ok) {
+      console.log('Validation errors:', data.errors);
+      alert('Validation failed. Check console for details.');
+    }else{
+      setMessage(data.message)
+      setFormData({
+        category: '',
+        title: '',
+        slug: '',
+        description: '',
+        tags: '',
+        image: null,
+        published: false,
+      })
+    }
+  } catch (err) {
+    console.error('Error submitting form:', err);
+    alert('An error occurred.');
+  } finally {
+    setPending(false);
   }
 };
 
 
   return (
-    <div className='w-full pr-12 '>
-      <div className='flex justify-between items-center'>
-        <h2 className='font-roboto font-bold text-[22px]'>Add Post</h2>
-        {message && <p className='text-green-700 font-bold text-lg'>{message}</p>}
-      </div>
-      <form className='w-full mt-8 flex flex-col gap-6' onSubmit={handleSubmit}>
-        <div className='w-full flex flex-col gap-1'>
-          <label htmlFor="" className='font-roboto font-medium'>Category</label>
-          <select name="category" id="" value={formData.category} className='w-full border border-gray-400 px-2 text-[15px] py-1 rounded-sm outline-none focus:border-green-700 text-gray-600' onChange={handleChange}>
-            <option value="" disabled hidden>Select category</option>
-            <option value="Food">Food</option>
-            <option value="Travel">Travel</option>
-          </select>
+    <>
+      {!pending ? (<div className='w-full pr-12 '>
+        <div className='flex justify-between items-center'>
+          <h2 className='font-roboto font-bold text-[22px]'>Add Post</h2>
+          {message && (<Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+            Here is a gentle confirmation that your action was successful.
+          </Alert>)}
         </div>
-        <div className='flex w-full  gap-4'>
-          <div className='w-1/2 flex flex-col gap-1'>
-            <label htmlFor="name" className='font-roboto font-medium'>Title</label>
-            <input type="text" value={formData.title} className='w-full font-roboto border border-gray-400 px-2 py-1 rounded-sm outline-none focus:border-green-700 text-[15px] text-gray-600' name='title' onChange={handleChange} />
+        <form className='w-full mt-8 flex flex-col gap-6' onSubmit={handleSubmit}>
+          <div className='w-full flex flex-col gap-1'>
+            <label htmlFor="" className='font-roboto font-medium'>Category</label>
+            <select name="category" id="" value={formData.category} className='w-full border border-gray-400 px-2 text-[15px] py-2 rounded-sm outline-none focus:border-green-700 text-gray-600' onChange={handleChange}>
+              <option value="" disabled hidden>Select category</option>
+              <option value="Food">Food</option>
+              <option value="Travel">Travel</option>
+            </select>
           </div>
-          <div className='w-1/2 flex flex-col gap-1'>
-            <label htmlFor="name" className='font-roboto font-medium'>Slug</label>
-            <input type="text" name='slug' value={formData.slug} className='w-full font-roboto border border-gray-400 px-2 py-1 rounded-sm outline-none focus:border-green-700 text-[15px] text-gray-600' onChange={handleChange}/>
+          <div className='flex w-full  gap-4'>
+            <div className='w-1/2 flex flex-col gap-1'>
+              <label htmlFor="name" className='font-roboto font-medium'>Title</label>
+              <input type="text" value={formData.title} className='w-full font-roboto border border-gray-400 px-2 py-2 rounded-sm outline-none focus:border-green-700 text-[15px] text-gray-600' name='title' onChange={handleChange} />
+            </div>
+            <div className='w-1/2 flex flex-col gap-1'>
+              <label htmlFor="name" className='font-roboto font-medium'>Slug</label>
+              <input type="text" name='slug' value={formData.slug} className='w-full font-roboto border border-gray-400 px-2 py-2 rounded-sm outline-none focus:border-green-700 text-[15px] text-gray-600' onChange={handleChange}/>
+            </div>
           </div>
-        </div>
-        <div>
           <div>
-           <label htmlFor="name" className='font-roboto font-medium'>Description</label>
-           <textarea type="text" name='description' value={formData.description} className='w-full border font-roboto border-gray-400 px-2 py-1 rounded-sm outline-none focus:border-green-700 text-[15px] text-gray-600 min-h-[120px]' onChange={handleChange}/>
+            <div>
+            <label htmlFor="name" className='font-roboto font-medium'>Description</label>
+            <textarea type="text" name='description' value={formData.description} className='w-full border font-roboto border-gray-400 px-2 py-2 rounded-sm outline-none focus:border-green-700 text-[15px] text-gray-600 min-h-[120px]' onChange={handleChange}/>
+            </div>
           </div>
-        </div>
-        <div className='flex w-full  gap-4'>
-          <div className='w-1/2 flex flex-col gap-1'>
-            <label htmlFor="name" className='font-roboto font-medium'>Image</label>
-            <input type="file" name='image' className='w-full border font-roboto border-gray-400 px-2 py-1 rounded-sm outline-none focus:border-green-700 text-[15px] text-gray-600' onChange={handleChange}/>
+          <div className='flex w-full  gap-4'>
+            <div className='w-1/2 flex flex-col gap-1'>
+              <label htmlFor="name" className='font-roboto font-medium'>Image</label>
+              <input type="file" name='image' className='w-full border font-roboto border-gray-400 px-2 py-2 rounded-sm outline-none focus:border-green-700 text-[15px] text-gray-600' onChange={handleChange}/>
+            </div>
+            <div className='w-1/2 flex flex-col gap-1'>
+              <label htmlFor="name" className='font-roboto font-medium'>Tags <span className='text-sm font-normal text-gray-500'>Separated by commas</span></label>
+              <input type="text" name='tags' value={formData.tags} className='w-full border font-roboto border-gray-400 px-2 py-2 rounded-sm outline-none focus:border-green-700 text-[15px] text-gray-600'  placeholder='ex: food, japan, culture' onChange={handleChange}/>
+            </div>
           </div>
-          <div className='w-1/2 flex flex-col gap-1'>
-            <label htmlFor="name" className='font-roboto font-medium'>Tags <span className='text-sm font-normal text-gray-500'>Separated by commas</span></label>
-            <input type="text" name='tags' value={formData.tags} className='w-full border font-roboto border-gray-400 px-2 py-1 rounded-sm outline-none focus:border-green-700 text-[15px] text-gray-600'  placeholder='ex: food, japan, culture' onChange={handleChange}/>
+          <div>
+            <button className='px-5 py-3 bg-green-900 text-white font-roboto font-bold tracking-[0.6px] rounded-lg text-sm  cursor-pointer hover:bg-green-600 transition-all duration-300 ease-in-out'>Create Post</button>
           </div>
-        </div>
-        <div>
-          <button className='px-4 py-1.5 bg-green-600 text-white font-roboto font-normal text-sm rounded-sm cursor-pointer hover:bg-green-700 transition-all duration-300 ease-in-out'>Save Post</button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>) :  (
+          <div>
+            <Backdrop sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })} open={open}>
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          </div>
+        )}
+
+    </>
   )
 }
 

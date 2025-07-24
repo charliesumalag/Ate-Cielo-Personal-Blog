@@ -59,7 +59,7 @@ const DashboardNav = () => {
                             ? 'bg-green-900 text-white w-full px-4 py-3 block rounded-xl'
                             : 'w-full px-4 py-3 block rounded-xl'
                             }
-                        > <span className='mr-2'><i class="fa-solid fa-house"></i></span> Dashboard
+                        > <span className='mr-2'><i className="fa-solid fa-house"></i></span> Dashboard
                     </NavLink>
                 </li>
                 <li className="w-full">
@@ -70,7 +70,7 @@ const DashboardNav = () => {
                             ? 'bg-green-900 text-white w-full px-4 py-3 block rounded-xl'
                             : 'w-full px-4 py-3 block rounded-xl'
                         }>
-                        <span className='mr-2'><i class="fa-solid fa-circle-plus text-lg"></i></span> New Post
+                        <span className='mr-2'><i className="fa-solid fa-circle-plus text-lg"></i></span> New Post
                     </NavLink>
                 </li>
                 <li className="w-full">
@@ -81,7 +81,7 @@ const DashboardNav = () => {
                             ? 'bg-green-900 text-white w-full px-4 py-3 block rounded-xl'
                             : 'w-full px-4 py-3 block rounded-xl'
                         }>
-                        <span className='mr-2'><i class="fa-solid fa-layer-group"></i></span> Category
+                        <span className='mr-2'><i className="fa-solid fa-layer-group"></i></span> Category
                     </NavLink>
                 </li>
                 <li className="w-full">
@@ -92,7 +92,7 @@ const DashboardNav = () => {
                             ? 'bg-green-900 text-white w-full px-4 py-3 block rounded-xl'
                             : 'w-full px-4 py-3 block rounded-xl'
                         }>
-                        <span className='mr-2'><i class="fa-solid fa-clipboard-list text-lg"></i></span> My Post
+                        <span className='mr-2'><i className="fa-solid fa-clipboard-list text-lg"></i></span> My Post
                     </NavLink>
                 </li>
             </ul>
