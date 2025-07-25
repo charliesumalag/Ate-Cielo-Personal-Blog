@@ -55,8 +55,8 @@ const EditProfile = () => {
     return (
     <div className='flex flex-col justify-center items-center mt-44 font-roboto '>
         <div className='w-[380px]'>
-            <div className='mb-10 flex flex-col gap-2'>
-                <h2 className='text-4xl font-bold tracking-wide text-[#013220]'>Edit Profile</h2>
+            <div className='mb-6 flex flex-col gap-2'>
+                <h2 className='text-xl font-bold tracking-wide text-[#013220]'>Edit Profile</h2>
             </div>
             <form action="" onSubmit={handleSubmit} className='flex flex-col gap-4'>
                 <div className='flex flex-col gap-2'>
@@ -70,7 +70,7 @@ const EditProfile = () => {
                 </div>
                 {state.errors.name && ( <p className="text-red-500 text-sm">{state.errors.name[0]}</p>)}
                 {state.errors.image && ( <p className="text-red-500 text-sm">{state.errors.image[0]}</p> )}
-                <button className='bg-[#013220] font-roboto tracking-widest text-white p-2 mt-6 rounded-md cursor-pointer'>Save</button>
+                <button className='bg-green-900 font-roboto tracking-widest text-white p-2 mt-6 rounded-md cursor-pointer hover:bg-green-600 duration-300 transition-all ease-in-out'>Save</button>
             </form>
         </div>
     </div>
